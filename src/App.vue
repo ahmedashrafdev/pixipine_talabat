@@ -1,32 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <div id="app" class="min-h-screen overflow-hidden">
+    
+    <nav-bar/>
     <router-view/>
+    <app-footer/>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import NavBar from "@/layouts/NavBar.vue"
+import AppFooter from "@/layouts/AppFooter.vue"
+export default {
+  components:{
+    "nav-bar" : NavBar,
+    "app-footer" : AppFooter,
+  },
+  mounted(){
+    const html = document.querySelector("html");
+    if (localStorage.getItem("locale")) {
+      localStorage.getItem("locale") == "ar"
+        ? html.classList.add("rtl")
+        : html.classList.remove("rtl");
+    } else {
+      html.classList.add("rtl");
     }
   }
 }
-</style>
+</script>
+
