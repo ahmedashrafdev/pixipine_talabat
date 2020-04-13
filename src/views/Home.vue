@@ -19,7 +19,7 @@
             >
             <input type="text" :placeholder="$t('location_placeholder')" class="w-full pl-12 block placeholder-black p-3 rounded-md"/>
           </div>
-          <a href="#" class="bg-primary md:w-32 w-full justify-center text-white text-center p-3 block rounded-md">{{$t('continue')}}</a>
+          <router-link to="/menu" class="bg-primary md:w-32 w-full justify-center text-white text-center p-3 block rounded-md">{{$t('continue')}}</router-link>
         </div>
       </div>
       <div class="icons flex m-t-4 items-center justify-center">
