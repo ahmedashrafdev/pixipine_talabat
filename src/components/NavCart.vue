@@ -67,8 +67,8 @@
           <span class="text-md  capitalize">KD 18.00</span>
         </div>
         <div class="data flex p-3 pb-2 pt-1 text-center text-sm sm:text-base text-white">
-          <router-link to="/checkout" class="text-secondary border solid border-secondary px-2 sm:hidden mr-2 block h-mincontent w-2/5  hover:bg-green-700 p-1 rounded">{{$t('add_items')}}</router-link>
-          <router-link to="/checkout" class="text-white bg-secondary px-2  hover:bg-green-700 w-full p-1 rounded">{{$t('checkout')}}</router-link>
+          <router-link to="/menu" @click="toggleMenu" class="text-secondary border solid border-secondary px-2 sm:hidden mr-2 block h-mincontent w-2/5  hover:bg-green-700 p-1 rounded">{{$t('add_items')}}</router-link>
+          <router-link to="/checkout" @click="toggleMenu" class="text-white bg-secondary px-2  hover:bg-green-700 w-full p-1 rounded">{{$t('checkout')}}</router-link>
         </div>
       </div>
     </div>

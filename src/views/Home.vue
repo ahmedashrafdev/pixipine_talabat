@@ -10,9 +10,9 @@
       <div class="input mt-12 bg banner-input">
         <h5 class="heading text-white text-md mt-1 mb-2" >{{$t('select_location')}}</h5>
         <div class="md:flex block">
-          <div class="flex-1   md:mr-4 mr-0 md:mb-0 mb-4 relative">
+          <div class="flex-1   md:mr-4 ml-0 mr-0 md:mb-0 mb-4 relative">
             <font-awesome-icon
-                class="text-secondary absolute top-1/2 left-1  hover:text-primary"
+                class="text-secondary absolute translate-y-m50 top-1/2 left-1  hover:text-primary"
                 size="lg"
                 icon="map-marker-alt"
               ></font-awesome-icon

@@ -23,17 +23,38 @@
     }
 
     & .lg\:border-r{
-        border-left-width : 1px !important;
-        border-right-width : 0px !important;
+        @media (min-width: 1280px) { 
+            border-left-width : 1px !important;
+            border-right-width : 0px !important;
+        }
     }
     & .sm\:pr-32{
-        padding-left: 8rem !important;
-        padding-right: 0 !important;        
+        @media (min-width: 640px) {
+            padding-left: 8rem !important;
+            padding-right: 0 !important;      
+        }  
 
     }
     & .mr-2{
         @apply .ml-2;
         margin-right: 0 !important;
+    }
+
+    & .md\:mr-4 {
+        @media (min-width: 768px){
+            margin-right: 0rem !important;
+            margin-left: 1rem !important;
+        }
+    }
+
+    & .pl-12{
+        padding-left: 0 !important;
+        padding-right: 3rem !important;
+    }
+
+    & .left-1{
+        left: auto !important;
+        right: 1rem !important;
     }
 
     & .pr-0{

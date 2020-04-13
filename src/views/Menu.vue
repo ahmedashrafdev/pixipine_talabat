@@ -21,10 +21,10 @@
       </div>
 
       <div class="w-full overflow-hidden h-auto flex">
-        <div class="tab1 active content min-w-full">
+        <div class="tab1 active content min-w-full" @swipeleft="switchTab('tab2')">
           <Menu/>
         </div>
-        <div class="tab2 content min-w-full px-3">
+        <div class="tab2 content min-w-full px-3 " @swiperight="switchTab('tab1')">
           <Reviews/>
         </div>
       </div>

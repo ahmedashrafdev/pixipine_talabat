@@ -23,19 +23,40 @@
   border-right-width: 0px !important;
 }
 
-.rtl .lg\:border-r {
-  border-left-width: 1px !important;
-  border-right-width: 0px !important;
+@media (min-width: 1280px) {
+  .rtl .lg\:border-r {
+    border-left-width: 1px !important;
+    border-right-width: 0px !important;
+  }
 }
 
-.rtl .sm\:pr-32 {
-  padding-left: 8rem !important;
-  padding-right: 0 !important;
+@media (min-width: 640px) {
+  .rtl .sm\:pr-32 {
+    padding-left: 8rem !important;
+    padding-right: 0 !important;
+  }
 }
 
 .rtl .mr-2 {
   @apply .ml-2;
   margin-right: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .rtl .md\:mr-4 {
+    margin-right: 0rem !important;
+    margin-left: 1rem !important;
+  }
+}
+
+.rtl .pl-12 {
+  padding-left: 0 !important;
+  padding-right: 3rem !important;
+}
+
+.rtl .left-1 {
+  left: auto !important;
+  right: 1rem !important;
 }
 
 .rtl .pr-0 {
