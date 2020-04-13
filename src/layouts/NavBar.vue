@@ -48,9 +48,11 @@ export default {
       if (this.$i18n.locale == "ar") {
         html.classList.add("rtl");
         html.setAttribute("lang", "ar");
+        html.setAttribute("dir", "rtl");
       } else {
         html.classList.remove("rtl");
         html.setAttribute("lang", "en");
+        html.setAttribute("dir", "ltr");
       }
     }
   }

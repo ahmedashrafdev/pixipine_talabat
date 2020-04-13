@@ -17,11 +17,19 @@ export default {
   mounted(){
     const html = document.querySelector("html");
     if (localStorage.getItem("locale")) {
-      localStorage.getItem("locale") == "ar"
-        ? html.classList.add("rtl")
-        : html.classList.remove("rtl");
+      if(localStorage.getItem("locale") == "ar"){
+
+        html.setAttribute("dir", "rtl");
+        html.classList.add("rtl")
+      }else{
+
+        html.setAttribute("dir", "ltr");
+        html.classList.remove("rtl");
+      }
     } else {
       html.classList.add("rtl");
+      html.setAttribute("dir", "rtl");
+
     }
   }
 }
