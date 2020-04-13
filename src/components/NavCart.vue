@@ -67,8 +67,8 @@
           <span class="text-md  capitalize">KD 18.00</span>
         </div>
         <div class="data flex p-3 pb-2 pt-1 text-center text-sm sm:text-base text-white">
-          <router-link to="/menu" @click="toggleMenu" class="text-secondary border solid border-secondary px-2 sm:hidden mr-2 block h-mincontent w-2/5  hover:bg-green-700 p-1 rounded">{{$t('add_items')}}</router-link>
-          <router-link to="/checkout" @click="toggleMenu" class="text-white bg-secondary px-2  hover:bg-green-700 w-full p-1 rounded">{{$t('checkout')}}</router-link>
+          <a href="#" @click.prevent="addItem" class="text-secondary border solid border-secondary px-2 sm:hidden mr-2 block h-mincontent w-2/5  hover:bg-green-700 p-1 rounded">{{$t('add_items')}}</a>
+          <a href="#" @click.prevent="checkout" class="text-white bg-secondary px-2  hover:bg-green-700 w-full p-1 rounded">{{$t('checkout')}}</a>
         </div>
       </div>
     </div>
@@ -82,6 +82,20 @@ export default {
     toggleMenu(){
       let menu = this.$refs.menu
       menu.classList.toggle('active')
+    },
+    addItem(){
+      this.$router.push('/menu')
+      this.toggleMenu()
+    },
+
+    checkout(){
+      this.$router.push('/checkout')
+      this.toggleMenu()
+    },},
+  watch:{
+    '$route' () {
+      let menu = this.$refs.menu
+      menu.classList.remove('active')
     }
   }
 };

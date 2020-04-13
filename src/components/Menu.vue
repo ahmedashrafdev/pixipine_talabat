@@ -77,8 +77,8 @@
           <div class="overflow-hidden mt-3">
             <ul class="category-items dropdown lg:text-lg md:text-md text-xs">
               <li
-                class="border-b rounded hover:bg-gray-200 cursor-pointer border-gray-200 item flex xs:flex-no-wrap flex-wrap justify-between p-3">
-                <div class="left flex xs:flex-no-wrap flex-wrap">
+                class="border-b rounded hover:bg-gray-200 cursor-pointer border-gray-200 item flex flex-no-wrap justify-between p-3">
+                <div class="left flex flex-no-wrap ">
                   <a href="#" class="mr-3 h-mincontent w-48 img p-1 border border-gray-200">
                     <img
                       class="w-full h-auto"
