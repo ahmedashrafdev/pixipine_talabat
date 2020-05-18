@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <ul class="breadcrumbs text-color text-sm py-2  border-b border-gray-100 border-solid shadow px-4">
+    <div class="w-full border-b border-gray-100 border-solid shadow">
+        <ul class="breadcrumbs text-color text-sm px-2">
             <li class="capitalize">home</li>
             <li class="capitalize">menu</li>
         </ul>

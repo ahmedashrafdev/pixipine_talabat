@@ -4,56 +4,18 @@
       class="categories h-mincontent hidden md:block w-56 shadow py-4 border border-grey-500 solid rounded-sm"
     >
       <h3 class="px-5 pb-4   border-b border-grey-500 solid">{{$t('categories')}}</h3>
-      <ul class=" ">
+      <ul class="" v-if="!categoriesLoading">
         <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer active text-sm py-2"
+         v-for="cat in categories" :key="cat.slug" 
+          @click="setCategory(cat.slug)"
+          :class="cat.slug == selectedCategory ? 'hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2 active' : 'hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2' "
+          
         >
-          most selling
+          {{cat.name}}
         </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          sandwitches
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          salad
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          starters
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          burgers
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          pasta
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          juices
-        </li>
-        <li
-          @click="setCategory('category', $event)"
-          class="hover:bg-gray-200 text-gray-700 px-5 cursor-pointer text-sm py-2"
-        >
-          soft drinks
-        </li>
+        
       </ul>
+      <Loader v-if="categoriesLoading"/>
     </div>
     <div class="menu flex-1 px-0 sm:px-4">
       <input
@@ -1044,28 +1006,54 @@
 
 <script>
 import MenuCart from "@/components/MenuCart.vue";
+import Loader from "@/components/Loader.vue";
 
 export default {
-  name: "menuPage",
+  name: "menuTab",
   components: {
     "menu-cart": MenuCart,
+    Loader,
+  },
+  computed: {
+    categories() {
+      return this.$store.getters["menu/categories"];
+    },
+    categoriesLoading() {
+      return this.$store.getters["menu/categoriesLoading"];
+    },
+    itemsLoading() {
+      return this.$store.getters["menu/itemsLoading"];
+    },
+    selectedCategory() {
+      return this.$store.getters["menu/selectedCategory"];
+    },
+
+    
   },
   methods: {
+    async getCategories(){
+      await this.$store.dispatch('menu/getCategories')
+    },
     openMenuItem(e) {
       let element = e.target.closest(".menu-item-heading").parentElement;
       let menu = element.lastChild.firstChild;
       menu.classList.toggle("active");
       console.log(menu);
     },
-    setCategory(category, e) {
-      let element = e.target;
-      let siblings = element.parentElement.childNodes;
-      siblings.forEach((sibling) => {
-        sibling.classList.remove("active");
-      });
-      element.classList.add("active");
+    async setCategory(category) {
+      await this.$store.dispatch('menu/setSelectedCategory' , category)
+
+      // let element = e.target;
+      // let siblings = element.parentElement.childNodes;
+      // siblings.forEach((sibling) => {
+      //   sibling.classList.remove("active");
+      // });
+      // element.classList.add("active");
     },
   },
+  created(){
+    this.getCategories()
+  }
 };
 </script>
 

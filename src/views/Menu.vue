@@ -36,11 +36,16 @@ import Breadcrumbs from "@/components/Breadcrumbs.vue";
 import Menu from "@/components/Menu.vue";
 import Reviews from "@/components/Reviews.vue"
 export default {
-  name: "breadcrumbs",
+  name: "menuPage",
   components: {
     Breadcrumbs,
     Menu,
     Reviews,
+  },
+  computed: {
+    categories() {
+      return this.$store.getters["menu/categories"];
+    },
   },
   methods: {
     switchTab(tab) {
@@ -56,9 +61,9 @@ export default {
       });
       elem.classList.add("active");
       elemContent.classList.add("active");
-      console.log(elemContent);
     },
   },
+  
 };
 </script>
 <style lang="scss" scoped>

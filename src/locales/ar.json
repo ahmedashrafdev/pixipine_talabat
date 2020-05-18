@@ -4,16 +4,36 @@
   "search_placeholder" :"البجث عن اصناف",
   "rights":" جميع حقوق النشر © محفوظة لشركة PIXIPINE",
   "date":"",
+  "register" : "انشاء حساب",
 
+  "dont_have_account":" ليس لديك حساب؟",
+  "alredy_have_account" : "بالفعل لديك حساب",
   "menu" : "الثائمة",
   "login" : "تسجيل الدخول",
   "categories" : "الاصناف",
   "your_cart" : "سلة شرائك",
+  "registerd_successed" : "لقد تم تسجيل ادخول بنجاح",
+  "numiric" : "من فضلك ادخل هاتف صحيح",
+
+
+  "invalid_email":"من فضلك ادخل بريد الكتروني ",
+  "required":"هذا الحقل مطلوب",
+  "min_6" : "هذا الحقل يجب ان يحتوي علي 6 احرف او ارقام علي الاقل",
+  "my_orders" : "طلباتي السابقة",
+  "account_info" : "معلومات الحسابب",
+  "saved_addresses" : "عناوين التوصيل",
+  "logout" : "تسجيل الخروج",
+  "login_successed" : "لقد سجلت الدخول بنجاح",
+
+  "account": "حسابي",
+
   "continue" : "الاستمرار",
   "location_placeholder" : "ابحث عن منطقة، قطعة، اسم شارع...",
   "load_more" : "اقرا المزيد",
-
-  "free" : "مجانا",
+  "email" : "البريد الالكترني",
+  "password" : "كلمة السر",
+  "confirm_password" : "تاكيد كلمة السر",
+  "free" : "مجانا", 
   "add_items" : "اضافة صنف",
   "select_location" : "ادخل موقعك",
 
