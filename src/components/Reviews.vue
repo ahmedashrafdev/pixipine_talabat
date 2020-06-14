@@ -109,6 +109,22 @@ export default {
   components: {
     "menu-cart": MenuCart,
   },
+  methods: {
+    async getReviews(){
+    await this.$store.dispatch('review/getReviews')
+    }
+  },
+  computed: {
+    reviews() {
+      return this.$store.getters["review/reviews"];
+    },
+    reviewsLoading() {
+      return this.$store.getters["review/menuLoading"];
+    },
+  },
+  created(){
+    this.getReviews()
+  }
 }
 </script>
 

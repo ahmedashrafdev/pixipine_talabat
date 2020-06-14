@@ -18,7 +18,7 @@
           autocomplete="off"
           @submit.prevent="onSubmit()"
         >
-          <text-field :field="form.email" :validation="emailValidation" v-model="form.email" fieldName="email" type="email" :hasErr="form.errors.has('email')" :errMsg="form.errors.get('email')"/>
+          <text-field class="font-sans" :field="form.email" :validation="emailValidation" v-model="form.email" fieldName="email" type="email" :hasErr="form.errors.has('email')" :errMsg="form.errors.get('email')"/>
           <text-field :field="form.password" :validation="passwordValidation" v-model="form.password" fieldName="password" type="password" :hasErr="form.errors.has('password')" :errMsg="form.errors.get('password')"/>
           <submit-btn :isDisabled="form.errors.any()" :isLoading="form.isLoading" title="login"/>
         </form>
@@ -62,30 +62,39 @@ export default {
     "text-field" : TextField,
     "submit-btn" : SubmitBtn,
   },
+  computed: {
+    rtl() {
+      return this.$store.getters["ui/rtl"];
+    },
+  },
   methods: {
-    onSubmit() {
-      this.form
-        .post("http://127.0.0.1:8000/api/login")
-        .then( async (data) => {
-          await this.$store.dispatch('user/login', { data })
+    async onSubmit() {
+       await this.$store.dispatch('user/login', this.form ).then(async ()=>{
           await this.$store.dispatch('ui/showFlashMsg', { "msg" : 'login_successed' , duration: 3000 , type : "success" })
           this.hide()
           this.$router.push('/menu')
-        });
+       })
+      
+  
     },
     show() {
-      this.$modal.show("modal-login");
+      
+       return this.$store.dispatch('ui/showModal', { "name" : 'modal-login' , modal: this.$modal })
+      // this.$modal.show("modal-login");
     },
     showRegister() {
       this.$modal.show("modal-register");
       this.$modal.hide("modal-login");
     },
     opened() {
-      // this.$refs.email.focus();
       let modal = document.querySelector(".v--modal-box.v--modal");
-      // let value = modal.style.left;
-      // modal.style.left = "auto";
-      // modal.style.right = value;
+      let value = modal.style.left;
+      if(this.rtl){
+        modal.style.left = "auto";
+        modal.style.right = value;
+        modal.style.textAlign = 'right';
+      }
+      
     },
     hide() {
       this.$modal.hide("modal-login");

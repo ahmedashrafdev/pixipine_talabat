@@ -8,20 +8,21 @@ import { Datetime } from 'vue-datetime'
 import "./css/main.css"
 import "./css/_rtl.scss"
 import VModal from 'vue-js-modal'
-// You need a specific loader for CSS files
 import 'vue-datetime/dist/vue-datetime.css'
-
+import VueProgressBar from 'vue-progressbar'
 import i18n from './i18n'
-import Axios from 'axios'
-
-Vue.prototype.$http = Axios;
+import api from "./axios/index"
+Vue.prototype.$http = api;
 Vue.config.productionTip = false
 Vue.use(Datetime)
 Vue.use(VModal)
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(0, 151, 239)',
+  failedColor: 'red',
+  height: '4px'
+})
+
 
 new Vue({
   router,

@@ -17,7 +17,7 @@
           
         </form>
         <div class="text-sm font-normal text-center">
-          <p>{{$t('alredy_have_account')}}<a href="#" class="text-blue-600 hover:text-blue-800" @click.prevent="showLogin">Login</a></p>
+          <p>{{$t('alredy_have_account')}} <a href="#" class="text-blue-600 hover:text-blue-800" @click.prevent="showLogin">{{$t('login')}}</a></p>
         </div>
       </div>
     </modal>
@@ -63,6 +63,11 @@ export default {
     "text-field" : TextField,
     "submit-btn" : SubmitBtn,
   },
+  computed: {
+    rtl() {
+      return this.$store.getters["ui/rtl"];
+    },
+  },
   methods: {
     onSubmit() {
       this.form
@@ -82,11 +87,13 @@ export default {
       this.$modal.hide('modal-register')
     },
     opened() {
-      // this.$refs.email.focus()
-      // let modal = document.querySelector(".v--modal-box.v--modal");
-      // let value = modal.style.left;
-      // modal.style.left = "auto";
-      // modal.style.right = value;
+      let modal = document.querySelector(".v--modal-box.v--modal");
+      let value = modal.style.left;
+      if(this.rtl){
+        modal.style.left = "auto";
+        modal.style.right = value;
+        modal.style.textAlign = 'right';
+      }
     },
     hide() {
       this.$modal.hide('modal-register')

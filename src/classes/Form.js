@@ -1,10 +1,7 @@
 import Errors from './Errors'
-import axios from "axios";
+import http from "../axios/index"
+import axios from "axios"
 
-const token = localStorage.getItem('token')
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
-}
 export default class Form {
   constructor(data) {
     
@@ -59,26 +56,29 @@ export default class Form {
     return new Promise((resolve, reject) => {
       this.isLoading = true;
 
-      axios[requestType](url, this.data())
+      http[requestType](url, this.data())
         .then((response) => {
-          this.onSuccess(response.data);
+          this.onSuccess();
           resolve(response.data);
         })
         .catch((error) => {
+          console.log(error.response.data.errors)
           this.onFail(error.response.data);
-          reject(error.response.data);
+          reject(error);
         });
     });
   }
 
-  onSuccess(data) {
+  onSuccess() {
     this.reset();
     this.isLoading = false;
     // this.isLoading(false)
   }
 
   onFail(error) {
+    
     if (error[["errors"]]) {
+      console.log(error[['error']])
       this.errors.record(error[["errors"]]);
       this.isLoading = false;
 

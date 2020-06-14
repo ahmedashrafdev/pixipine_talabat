@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <div
+    <div
       class="home bg-auto bg-center bg-no-repeat flex-col bg-cover min-h-screen flex items-center justify-center"
       style='background: rgb(0, 0, 0) url("https://images.deliveryhero.io/image/talabat/homeBanners/homepagemain-banner_n_636365819337036680.jpg") no-repeat scroll center top;'
     >
       <div class="location">
-        
-        <div class="heading">
+        <div class="container">
+          <div class="heading">
           <h1 class="text-white text-heading text-center">
             {{ $t("home_header") }}
           </h1>
@@ -16,23 +16,23 @@
             {{ $t("select_location") }}
           </h5>
           <div class="md:flex block">
-            <div class="flex-1   md:mr-4 ml-0 mr-0 md:mb-0 mb-4 relative">
-              <font-awesome-icon
-                class="text-secondary absolute translate-y-m50 top-1/2 left-1  hover:text-primary"
-                size="lg"
-                icon="map-marker-alt"
-              ></font-awesome-icon>
-              <input
-                type="text"
+            <div class="flex-1 find-place  md:mr-4 ml-0 mr-0 md:mb-0 mb-4 relative">
+              <places
+                ref="input"
+                v-model="form.country.label"
+                class="w-full pl-2 block placeholder-black p-3 rounded-md"
                 :placeholder="$t('location_placeholder')"
-                class="w-full pl-12 block placeholder-black p-3 rounded-md"
-              />
+                type="address"
+              >
+              </places>
             </div>
-            <router-link
-              to="/menu"
+            <a
+              @click.prevent="saveAddress()"
               class="bg-primary md:w-32 w-full justify-center text-white text-center p-3 block rounded-md"
-              >{{ $t("continue") }}</router-link
+              >{{ $t("continue") }}</a
             >
+            
+            
           </div>
         </div>
         <div class="icons flex m-t-4 items-center justify-center">
@@ -42,76 +42,93 @@
             class="ng-scope h-5"
           />
         </div>
+        </div>
+        
       </div>
-    </div> -->
-    <div class="pt-32">
-
-  <p>
-    Let us locate you for better results...
-    <button @click="locateMe">Get location</button>
-  </p>
-  
-  <div v-if="errorStr">
-    Sorry, but the following error
-    occurred: {{errorStr}}
-  </div>
-  
-  <div v-if="gettingLocation">
-    <i>Getting your location...</i>
-  </div>
-  
-  <div v-if="location">
-    Your location data is {{ location.coords.latitude }}, {{ location.coords.longitude}}
-  </div>
-  
-</div>
-
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
+import Places from "vue-places";
+
 export default {
   name: "Home",
-  data(){
+  data() {
     return {
-      location:null,
+      form: {
+        country: {
+          label: null,
+          data: {},
+        },
+      },
       gettingLocation: false,
-      errorStr:null
-
-    }
+      errorStr: null,
+      latitude:null,
+      longitude:null,
+      focused:false,
+    };
+  },
+  mounted() {
+    this.$refs.input.$el.addEventListener("focus", (e) => {
+      this.onFocus(e);
+    });
+  },
+  components: {
+    Places,
   },
   methods: {
-    async getLocation() {
-      
-      return new Promise((resolve, reject) => {
-
-        if(!("geolocation" in navigator)) {
-          reject(new Error('Geolocation is not available.'));
-        }
-
-        navigator.geolocation.getCurrentPosition(pos => {
-          resolve(pos);
-        }, err => {
-          reject(err);
-        });
-
-      });
-    },
-    async locateMe() {
-
-      this.gettingLocation = true;
-      try {
-        this.gettingLocation = false;
-        this.location = await this.getLocation();
-      } catch(e) {
-        this.gettingLocation = false;
-        this.errorStr = e.message;
+    onFocus(e) { 
+      if(!this.focused){
+        if (!("geolocation" in navigator)) {
+        this.errorStr = "Geolocation is not available.";
+        return;
       }
-      
-    }
-  }
+      if (this.latitude !== null && this.longitude !== null) {
+        this.errorStr = "Geolocation is already stored.";
+
+        return 
+      }
+      this.gettingLocation = true;
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          this.latitude = pos.coords.latitude
+          this.longitude = pos.coords.longitude
+          this.gettingLocation = false;
+          let api_url = `https://api.opencagedata.com/geocode/v1/json?q=${pos.coords.latitude}+${pos.coords.longitude}&key=0f2c1c37ed2f4a16906cbd30a90f1b49`
+          this.$http.get(api_url).then(response => {
+            let res = response.data.results[0].components
+            let jsonAddress = JSON.stringify({
+                city: res.city,
+                building: res.house_number,
+                state: res.neighbourhood,
+                postal: res.postcode,
+                street: res.road,
+                suburb: res.suburb,
+              })
+            localStorage.setItem('address' , jsonAddress)
+            this.$store.dispatch('ui/showFlashMsg', { "msg" : 'address_stored' , duration: 3000 , type : "success" })
+             this.$router.push('/menu')
+          })
+      this.focused = true;
+        })
+    }},
+    saveAddress() {
+      // LocalStorage.setItem('address' ,)
+      let address = this.form.country.data;
+      console.log(address.name)
+      // console.log(
+      //   JSON.stringify({
+      //     building: address.name,
+      //     postal: address.postcode,
+      //     state: address.suburb,
+      //     title: this.form.country.label,
+      //   })
+      // );
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

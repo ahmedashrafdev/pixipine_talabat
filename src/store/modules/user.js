@@ -58,16 +58,27 @@ export default {
     delete: (context) => {
       // stuff to erase user on the bockend : CRUD DELETE ACTION
     },
-    login: (ctx, data) => {
-        ctx.commit("setLoading", true);
-        let token = data['data']['access_token']
-        localStorage.setItem("token", token);
-        axios.defaults.headers.common['Authorization'] = token
-        ctx.commit("setToken", token);
-        ctx.commit("setIsLoggedIn", true);
-        ctx.commit("setLoading", false);
+    login: (ctx, form) => {
+      return new Promise((resolve, reject) => {
+        form
+        .post("login")
+        .then( async (data) => {
+          ctx.commit("setLoading", true);
+          let token = data['access_token']
+          localStorage.setItem("token", token);
+          ctx.commit("setToken", token);
+          ctx.commit("setIsLoggedIn", true);
+          ctx.commit("setLoading", false);
+          resolve(data);
+        })
+        .catch(e => {
+          reject(e);
+        })
         
         
+
+      })
+      
     },
    
     logout: (ctx) => {

@@ -1,28 +1,35 @@
 <template>
   <div id="app" class="min-h-screen relative overflow-hidden">
+    <progress-bar/>
+    <options-modal/>
     <nav-bar :loggedIn="isLogedIn"/>
     <router-view/>
     <app-footer v-if="$route.name !== 'home'"/>
     <flash-message v-if="showFlashMsg" :data="flashMsgData"/>
+     <vue-progress-bar></vue-progress-bar>
   </div>
+  
 </template>
 <script>
 import NavBar from "@/layouts/NavBar.vue"
 import FlashMessage from "@/components/FlashMessage.vue"
 import axios from "axios"
 import AppFooter from "@/layouts/AppFooter.vue"
+import ProgressBar from "@/components/ProgressBar.vue"
+import OptionsModal from "@/components/modals/Options.vue";
+
 export default {
   components:{
+    "progress-bar" : ProgressBar,
     "nav-bar" : NavBar,
     "app-footer" : AppFooter,
     "flash-message" : FlashMessage,
+    "options-modal": OptionsModal,
   },
   computed: {
-   
     isLogedIn() {
       return this.$store.getters["user/isLoggedIn"];
     },
-
     flashMsgData() {
       return this.$store.getters["ui/flashMsgData"];
     },
@@ -31,23 +38,22 @@ export default {
     },
   },
   mounted(){
-    const html = document.querySelector("html");
-    if (localStorage.getItem("locale")) {
-      if(localStorage.getItem("locale") == "ar"){
-
-        html.setAttribute("dir", "rtl");
-        html.classList.add("rtl")
-      }else{
-
-        html.setAttribute("dir", "ltr");
-        html.classList.remove("rtl");
-      }
-    } else {
-      html.classList.add("rtl");
-      html.setAttribute("dir", "rtl");
-
-    }
+    this.$Progress.finish()
+    this.$store.dispatch('ui/initLocale',{i18n : this.$i18n} )
   },
+
+  created () {
+    this.$Progress.start()
+    this.$router.beforeEach((to, from, next) => {
+      this.$Progress.start()
+      next()
+    })
+    this.$router.afterEach((to, from) => {
+      this.$Progress.finish()
+    })
+  }
+
+  
 //   // created: function () {
 //   // axios.interceptors.response.use(undefined, function (err) {
 //   //   return new Promise(function (resolve, reject) {

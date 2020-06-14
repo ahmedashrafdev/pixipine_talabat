@@ -174,9 +174,25 @@ button:disabled,
 button[disabled]{
   cursor: not-allowed;
 }
-
+.ap-input{
+    height:45px;
+}
 .is-danger{
     color:red
+}
+.ap-footer{
+    display: none;
+}
+.ap-suggestion{
+    display: flex;
+    height:auto !important;
+    padding:10px 0;
+
+align-items: center;
+}
+.ap-suggestion-icon{
+    margin-right: 17px !important;
+    margin-left: 17px !important;
 }
 
 

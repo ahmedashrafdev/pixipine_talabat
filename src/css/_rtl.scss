@@ -1,8 +1,21 @@
 .rtl{
-
+    .right-0{
+        right:auto !important;
+        left:0 !important;
+    }
     direction : rtl !important;
     font-family: "kufi" !important;
-
+    & .ap-input{
+        direction: rtl !important;
+    }
+    & .ap-input-icon{
+        left: 32px;
+        right: auto;
+    }
+    & .ap-address{
+        margin-left: 0;
+        margin-right: 12px;
+    }   
     & .right--10 {
         left:-10px;
         right:auto !important;
