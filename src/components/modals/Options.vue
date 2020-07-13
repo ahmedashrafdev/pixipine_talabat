@@ -1,5 +1,5 @@
 <template>
-  <Modal name="modal-options" height='auto' :width="800">
+  <Modal name="modal-options" height="auto" :width="800">
     <div v-if="showModal">
       <div class="modal-content" v-if="!itemLoading">
         <div
@@ -62,11 +62,51 @@
             :id="item.group.id"
           >
             <div class="form w-full p-3 flex flex-wrap">
-              <Radio
+              <div
                 class="mr-12"
                 v-for="(option, index) in item.options"
                 :key="index + 300"
-              />
+              >
+                <div class="flex items-center mr-4 mb-4" v-if="item.group.choices == 1">
+                  <input
+                    :id="`radio${option.id}`"
+                    type="radio"
+                    :name="item.group.id"
+                    :value="option.id"
+                    class="mr-1"
+                    v-model="item.group.selected"
+                  />
+                  <label
+                    :for="`radio${option.id}`"
+                    class="flex items-center cursor-pointer"
+                  >
+                   
+                    {{ option.name }}</label
+                  >
+                </div>
+                 <div class="flex items-center mr-4 mb-4" v-else>
+                  <input
+                    :id="`checkbox${option.id}`"
+                    type="checkbox"
+                    name="checkox[]"
+                    :value="option.id"
+                    class="mr-1"
+                    v-model="item.group.selected"
+                  />
+                  <label :for="`checkbox${option.id}`" class="flex items-center cursor-pointer">
+                    {{ option.name }}
+                  </label>
+                </div>
+              </div>
+              
+              <!-- <Radio
+                class="mr-12"
+                v-for="(option, index) in item.options"
+                :name="option.name"
+                :value="option.id"
+                :group="item.options"
+                :key="index + 300"
+              /> -->
             </div>
           </Accordion>
         </ul>
@@ -103,21 +143,8 @@ import Modal from "./Modal.vue";
 export default {
   data() {
     return {
-      form: new Form({
-        email: "ahmed@ahmed.com",
-        password: "123456",
-      }),
-      emailValidation: [
-        { message: "required", regex: /[^()]/ },
-        {
-          message: "invalid_email",
-          regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        },
-      ],
-      passwordValidation: [
-        { message: "required", regex: /[^()]/ },
-        { message: "min_6", regex: /.{6,}/ },
-      ],
+      group:'',
+      
     };
   },
   components: {
@@ -150,6 +177,12 @@ export default {
         });
         this.hide();
         this.$router.push("/menu");
+      });
+    },
+    close() {
+      this.$store.dispatch("ui/closeModal", {
+        name: "modal-options",
+        modal: this.$modal,
       });
     },
   },

@@ -11,7 +11,8 @@
         <font-awesome-icon
           class="hover:text-primary"
           size="lg"
-          icon="chevron-down"
+          @click.prevent="openMenuItem"
+          :icon="icon"
         ></font-awesome-icon>
       </div>
       <div class="overflow-hidden mt-3">
@@ -29,6 +30,11 @@ import Loader from "@/components/Loader.vue";
 
 export default {
   name: "accordion",
+  data() {
+    return {
+      icon:"chevron-down",
+    }
+  },
   components: {
     Loader,
   },
@@ -42,9 +48,10 @@ export default {
     openMenuItem(e) {
       let element = e.target.parentElement;
       let menu = element.lastChild.firstChild;
-      menu.classList.toggle("active");
-      console.log(element);
       console.log(menu);
+      menu.classList.toggle("active");
+      this.icon = this.icon == 'chevron-down' ? 'chevron-up' : 'chevron-down';
+      
     },
   }
 };

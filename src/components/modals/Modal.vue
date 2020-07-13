@@ -16,12 +16,7 @@
 export default {
     props:['name' , 'height' , 'width'],
   methods: {
-    close() {
-      this.$store.dispatch("ui/closeModal", {
-        name: this.name,
-        modal: this.$modal,
-      });
-    },
+    
     opened() {
       let modal = document.querySelector(".v--modal-box.v--modal");
       let value = modal.style.left;
